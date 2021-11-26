@@ -85,7 +85,17 @@ class MainActivity : AppCompatActivity() {
             }
             finish()
         }
-
+        // listar Categoria
+        if(item.itemId==R.id.action_listarCategoria){
+            val intent = Intent(applicationContext,ListaCategoriaActivity::class.java)
+            startActivity(intent)
+        }
+        //listar Item
+        if(item.itemId==R.id.action_listarItem){
+            val intent = Intent(applicationContext,ListaItemActivity::class.java)
+            startActivity(intent)
+        }
+        //
 
         return super.onOptionsItemSelected(item)
     }

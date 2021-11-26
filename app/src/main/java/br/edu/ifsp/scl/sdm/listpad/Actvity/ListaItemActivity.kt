@@ -5,10 +5,8 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import br.edu.ifsp.scl.sdm.listpad.Data.CategoriaAdapter
 import br.edu.ifsp.scl.sdm.listpad.Data.DatabaseHelper
 import br.edu.ifsp.scl.sdm.listpad.Data.ItemAdapter
-import br.edu.ifsp.scl.sdm.listpad.Model.Categoria
 import br.edu.ifsp.scl.sdm.listpad.Model.Item
 import br.edu.ifsp.scl.sdm.listpad.R
 import com.google.android.material.floatingactionbutton.FloatingActionButton
@@ -25,7 +23,7 @@ class ListaItemActivity : AppCompatActivity() {
 
         val fab = findViewById<FloatingActionButton>(R.id.fab)
         fab.setOnClickListener {
-            val intent = Intent(applicationContext,CadastroCategoriaActivity::class.java)
+            val intent = Intent(applicationContext,CadastroListaActivity::class.java)
             startActivity(intent)
         }
 
@@ -36,7 +34,7 @@ class ListaItemActivity : AppCompatActivity() {
         itensLista = db.listarItens()
         itemAdapter = ItemAdapter(itensLista)
 
-        val recyclerview = findViewById<RecyclerView>(R.id.recyclerview)
+        val recyclerview = findViewById<RecyclerView>(R.id.rVItem)
         recyclerview.layoutManager = LinearLayoutManager(this)
         recyclerview.adapter = itemAdapter
 
