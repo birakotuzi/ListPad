@@ -29,9 +29,14 @@ class CadastroListaActivity : AppCompatActivity() {
             val urgente = findViewById<EditText>(R.id.eTLisUrgente).text.toString()
             val categoria = findViewById<EditText>(R.id.eTLisCategoria).text.toString()
 
-            val l= Lista(null, nome, descricao, urgente.toInt(), categoria.toInt())
-            if(db.inserirLista(l)>0) {
-                Toast.makeText(this, "Lista inserida", Toast.LENGTH_LONG).show()
+            val existe = db.pesquisarListasPorNome(null, nome)
+            if (existe) {
+                Toast.makeText(this, "Não é possível inserir. Nome já existe na lista", Toast.LENGTH_LONG).show()
+            } else {
+                val l = Lista(null, nome, descricao, urgente.toInt(), categoria.toInt())
+                if (db.inserirLista(l) > 0) {
+                    Toast.makeText(this, "Lista inserida", Toast.LENGTH_LONG).show()
+                }
             }
             finish()
         }

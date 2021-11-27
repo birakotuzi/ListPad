@@ -46,8 +46,13 @@ class DetalheItemActivity : AppCompatActivity() {
             item.flag = flag.toInt()
             item.lista = lista.toInt()
 
-            if(db.atualizarItem(item)>0) {
-                Toast.makeText(this, "Informações alteradas", Toast.LENGTH_LONG).show()
+            val existe = db.pesquisarItensPorDescricao(item.id_item.toString(), descricao)
+            if (existe) {
+                Toast.makeText(this, "Não é possível atualizar. Já existe outro registro com essa descrição", Toast.LENGTH_LONG).show()
+            } else {
+                if (db.atualizarItem(item) > 0) {
+                    Toast.makeText(this, "Informações alteradas", Toast.LENGTH_LONG).show()
+                }
             }
             finish()
         }

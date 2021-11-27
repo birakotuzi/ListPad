@@ -49,9 +49,13 @@ class DetalheListaActivity : AppCompatActivity() {
             lista.urgente = urgente.toInt()
             lista.categoria = categoria.toInt()
 
-
-            if(db.atualizarLista(lista)>0) {
-                Toast.makeText(this, "Informações alteradas", Toast.LENGTH_LONG).show()
+            val existe = db.pesquisarListasPorNome(lista.id_lista.toString(), nome)
+            if (existe) {
+                Toast.makeText(this, "Não é possível atualizar. Já existe outro registro com esse nome na lista", Toast.LENGTH_LONG).show()
+            } else {
+                if (db.atualizarLista(lista) > 0) {
+                    Toast.makeText(this, "Informações alteradas", Toast.LENGTH_LONG).show()
+                }
             }
             finish()
         }

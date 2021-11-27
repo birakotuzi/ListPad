@@ -45,6 +45,33 @@ class MainActivity : AppCompatActivity() {
 
         var listener = object :ListaAdapter.ListaListener{
             override fun onItemClick(pos: Int) {
+                val intent = Intent(applicationContext,ListaItemActivity::class.java)
+                val l = listaAdapter.listasLista[pos]
+                intent.putExtra("lista", l)
+                startActivity(intent)
+
+            }
+
+            override fun onImageClick(pos: Int) {
+                val id: Int? = listaAdapter.listasLista[pos].id_lista
+                var urgente:Int? = listaAdapter.listasLista[pos].urgente
+
+                if (urgente == null ) {
+                    urgente = 0
+                }
+
+                if (urgente == 0) {
+                    urgente = 1
+                } else {
+                    urgente = 0
+                }
+
+                if(db.atualizarListaUrgente(id, urgente)>0) {
+                    updateUI()
+                }
+            }
+
+            override fun onImageEditClick(pos: Int) {
                 val intent = Intent(applicationContext,DetalheListaActivity::class.java)
                 val l = listaAdapter.listasLista[pos]
                 intent.putExtra("lista", l)
@@ -90,12 +117,12 @@ class MainActivity : AppCompatActivity() {
             val intent = Intent(applicationContext,ListaCategoriaActivity::class.java)
             startActivity(intent)
         }
-        //listar Item
+        /*
         if(item.itemId==R.id.action_listarItem){
             val intent = Intent(applicationContext,ListaItemActivity::class.java)
             startActivity(intent)
         }
-        //
+        */
 
         return super.onOptionsItemSelected(item)
     }

@@ -20,7 +20,7 @@ class ItemAdapter (val itensLista:ArrayList<Item>): RecyclerView.Adapter<ItemAda
         parent: ViewGroup,
         viewType: Int
     ): ItemAdapter.ItemViewHolder {
-        val view = LayoutInflater.from(parent.context).inflate(R.layout.lista_celula, parent, false)
+        val view = LayoutInflater.from(parent.context).inflate(R.layout.item_celula, parent, false)
         return ItemViewHolder(view)
     }
 

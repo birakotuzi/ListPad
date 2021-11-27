@@ -12,9 +12,20 @@ import br.edu.ifsp.scl.sdm.listpad.Model.Lista
 import br.edu.ifsp.scl.sdm.listpad.R
 
 class CadastroItemActivity : AppCompatActivity() {
+
+    private var lista = Lista()
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_cadastro_item)
+
+        lista = this.intent.getSerializableExtra("lista") as Lista
+        val listaId = findViewById<EditText>(R.id.eTItemLista)
+        val listaNome = findViewById<EditText>(R.id.eTItemListaNome)
+
+
+        listaId.setText(lista.id_lista.toString())
+        listaNome.setText(lista.nome.toString())
     }
 
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
@@ -29,9 +40,14 @@ class CadastroItemActivity : AppCompatActivity() {
             val flag = findViewById<EditText>(R.id.eTItemFlag).text.toString()
             val lista = findViewById<EditText>(R.id.eTItemLista).text.toString()
 
-            val l= Item(null, descricao, flag.toInt(), lista.toInt())
-            if(db.inserirItem(l)>0) {
-                Toast.makeText(this, "Item inserido", Toast.LENGTH_LONG).show()
+            val existe = db.pesquisarItensPorDescricao(null, descricao)
+            if (existe) {
+                Toast.makeText(this, "Não é possível inserir. Descrição já existe", Toast.LENGTH_LONG).show()
+            } else {
+                val l = Item(null, descricao, flag.toInt(), lista.toInt())
+                if (db.inserirItem(l) > 0) {
+                    Toast.makeText(this, "Item inserido", Toast.LENGTH_LONG).show()
+                }
             }
             finish()
         }

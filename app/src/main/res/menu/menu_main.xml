@@ -19,9 +19,4 @@
         android:icon="@android:drawable/ic_menu_preferences"
         app:showAsAction="always"/>
 
-    <item
-        android:id="@+id/action_listarItem"
-        android:title="Itens"
-        android:icon="@android:drawable/ic_menu_call"
-        app:showAsAction="always"/>
 </menu>

@@ -8,6 +8,7 @@ import androidx.recyclerview.widget.RecyclerView
 import br.edu.ifsp.scl.sdm.listpad.Data.DatabaseHelper
 import br.edu.ifsp.scl.sdm.listpad.Data.ItemAdapter
 import br.edu.ifsp.scl.sdm.listpad.Model.Item
+import br.edu.ifsp.scl.sdm.listpad.Model.Lista
 import br.edu.ifsp.scl.sdm.listpad.R
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 
@@ -16,14 +17,19 @@ class ListaItemActivity : AppCompatActivity() {
     val db = DatabaseHelper(this)
     var itensLista = ArrayList<Item>()
     lateinit var itemAdapter: ItemAdapter
+    private var lista = Lista()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_lista_item)
 
+        lista = this.intent.getSerializableExtra("lista") as Lista
+
         val fab = findViewById<FloatingActionButton>(R.id.fab)
         fab.setOnClickListener {
-            val intent = Intent(applicationContext,CadastroListaActivity::class.java)
+            startActivity(intent)
+            val intent = Intent(applicationContext,CadastroItemActivity::class.java)
+            intent.putExtra("lista", lista)
             startActivity(intent)
         }
 
@@ -31,6 +37,7 @@ class ListaItemActivity : AppCompatActivity() {
     }
 
     fun updateUI() {
+        //itensLista = db.listarItensPorIdLista(lista.id_lista.toString())
         itensLista = db.listarItens()
         itemAdapter = ItemAdapter(itensLista)
 
