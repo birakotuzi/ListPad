@@ -123,6 +123,16 @@ class DatabaseHelper(context: Context): SQLiteOpenHelper(context, DATABASE_NAME,
         return result
     }
 
+    fun atualizarItemFlag(id: Int?, flag: Int): Int {
+        val db = this.writableDatabase
+        val values = ContentValues()
+        values.put(ID_ITEM, id)
+        values.put(ITEM_FLAG, flag)
+        val result = db.update(ITEM_TABLE_NAME, values, "$ID_ITEM=?", arrayOf(id.toString()))
+        db.close()
+        return result
+    }
+
     fun atualizarItem(item: Item): Int {
         val db = this.writableDatabase
         val values = ContentValues()

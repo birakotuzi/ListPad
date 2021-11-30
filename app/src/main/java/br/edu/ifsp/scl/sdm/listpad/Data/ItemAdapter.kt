@@ -5,6 +5,7 @@ import android.os.Parcelable
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.ImageView
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import br.edu.ifsp.scl.sdm.listpad.Model.Item
@@ -28,6 +29,11 @@ class ItemAdapter (var itemsLista:ArrayList<Item>): RecyclerView.Adapter<ItemAda
 
     override fun onBindViewHolder(holder: ItemAdapter.ItemViewHolder, position: Int) {
         holder.descricaoItemVH.text = itemsLista[position].descricao
+        if(itemsLista[position].flag == 1){
+            holder.flagItemVH.setImageResource(R.drawable.ic_baseline_star_24)
+        } else {
+            holder.flagItemVH.setImageResource(R.drawable.ic_baseline_star_outline_24)
+        }
     }
 
     override fun getItemCount(): Int {
@@ -36,16 +42,21 @@ class ItemAdapter (var itemsLista:ArrayList<Item>): RecyclerView.Adapter<ItemAda
 
     inner class ItemViewHolder(view: View): RecyclerView.ViewHolder(view) {
         val descricaoItemVH = view.findViewById<TextView>(R.id.tvItemDescricao)
+        val flagItemVH = view.findViewById<ImageView>(R.id.ivItemFlag)
 
         init {
             view.setOnClickListener {
                 listener?.onItemClick(adapterPosition)
+            }
+            view.findViewById<ImageView>(R.id.ivItemFlag).setOnClickListener {
+                listener?.onImageClick(adapterPosition)
             }
         }
     }
 
     interface ItemListener {
         fun onItemClick(pos: Int)
+        fun onImageClick(pos: Int)
     }
 
 }

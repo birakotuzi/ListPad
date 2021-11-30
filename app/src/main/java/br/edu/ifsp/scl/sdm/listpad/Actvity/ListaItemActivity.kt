@@ -50,6 +50,25 @@ class ListaItemActivity : AppCompatActivity() {
                 intent.putExtra("item", i)
                 startActivity(intent)
             }
+
+            override fun onImageClick(pos: Int) {
+                val id: Int? = itemAdapter.itemsLista[pos].id_item
+                var flag:Int? = itemAdapter.itemsLista[pos].flag
+
+                if (flag == null ) {
+                    flag = 0
+                }
+
+                if (flag == 0) {
+                    flag = 1
+                } else {
+                    flag = 0
+                }
+
+                if(db.atualizarItemFlag(id, flag)>0) {
+                    updateUI()
+                }
+            }
         }
         itemAdapter.setClickListener(listener)
     }
