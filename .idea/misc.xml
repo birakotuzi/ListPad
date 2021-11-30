@@ -3,6 +3,9 @@
   <component name="DesignSurface">
     <option name="filePathToZoomLevelMap">
       <map>
+        <entry key="..\:/ifsp/ListPad/app/src/main/res/layout/_activity_detalhe_item.xml" value="0.1" />
+        <entry key="..\:/ifsp/ListPad/app/src/main/res/layout/_activity_lista_item.xml" value="0.18115942028985507" />
+        <entry key="..\:/ifsp/ListPad/app/src/main/res/layout/_commom_item_layout.xml" value="0.18115942028985507" />
         <entry key="..\:/ifsp/ListPad/app/src/main/res/layout/activity_cadastro_categoria.xml" value="0.11927083333333334" />
         <entry key="..\:/ifsp/ListPad/app/src/main/res/layout/activity_cadastro_item.xml" value="0.17617753623188406" />
         <entry key="..\:/ifsp/ListPad/app/src/main/res/layout/activity_cadastro_lista.xml" value="0.17391304347826086" />

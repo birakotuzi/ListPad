@@ -8,7 +8,6 @@ import android.widget.EditText
 import android.widget.Toast
 import br.edu.ifsp.scl.sdm.listpad.Data.DatabaseHelper
 import br.edu.ifsp.scl.sdm.listpad.Model.Item
-import br.edu.ifsp.scl.sdm.listpad.Model.Lista
 import br.edu.ifsp.scl.sdm.listpad.R
 
 class DetalheItemActivity : AppCompatActivity() {
@@ -20,9 +19,9 @@ class DetalheItemActivity : AppCompatActivity() {
         setContentView(R.layout.activity_detalhe_item)
 
         item = this.intent.getSerializableExtra("item") as Item
-        val descricao = findViewById<EditText>(R.id.eTItemDescricao)
-        val flag = findViewById<EditText>(R.id.eTItemFlag)
-        val lista = findViewById<EditText>(R.id.eTItemLista)
+        val descricao = findViewById<EditText>(R.id.etItemDescricao)
+        val flag = findViewById<EditText>(R.id.etItemFlag)
+        val lista = findViewById<EditText>(R.id.etItemLista)
 
         descricao.setText(item.descricao)
         flag.setText(item.flag.toString())
@@ -38,9 +37,9 @@ class DetalheItemActivity : AppCompatActivity() {
         val db = DatabaseHelper(this)
 
         if(menuItem.itemId==R.id.action_alterarLista) {
-            val descricao = findViewById<EditText>(R.id.eTItemDescricao).text.toString()
-            val flag = findViewById<EditText>(R.id.eTItemFlag).text.toString()
-            val lista = findViewById<EditText>(R.id.eTItemLista).text.toString()
+            val descricao = findViewById<EditText>(R.id.etItemDescricao).text.toString()
+            val flag = findViewById<EditText>(R.id.etItemFlag).text.toString()
+            val lista = findViewById<EditText>(R.id.etItemLista).text.toString()
 
             item.descricao = descricao
             item.flag = flag.toInt()

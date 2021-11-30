@@ -191,21 +191,6 @@ class DatabaseHelper(context: Context): SQLiteOpenHelper(context, DATABASE_NAME,
         return listaListas
     }
 
-    fun pesquisarListasPorNome(id: String?, nome: String):Boolean {
-        var existe = false
-        var query = "SELECT * FROM $LIS_TABLE_NAME WHERE $LIS_NOME = '$nome'"
-        if (id != null) {
-            query += " AND $ID_LISTA <> $id"
-        }
-        val db = this.readableDatabase
-        val cursor = db.rawQuery(query, null)
-        if (cursor.count > 0) {
-            existe = true
-        }
-        cursor.close()
-        db.close()
-        return existe
-    }
 
     fun listarItensPorIdLista(id_lista: String):ArrayList<Item> {
         val listaItens = ArrayList<Item>()
@@ -241,6 +226,23 @@ class DatabaseHelper(context: Context): SQLiteOpenHelper(context, DATABASE_NAME,
         cursor.close()
         db.close()
         return listaItens
+    }
+
+
+    fun pesquisarListasPorNome(id: String?, nome: String):Boolean {
+        var existe = false
+        var query = "SELECT * FROM $LIS_TABLE_NAME WHERE $LIS_NOME = '$nome'"
+        if (id != null) {
+            query += " AND $ID_LISTA <> $id"
+        }
+        val db = this.readableDatabase
+        val cursor = db.rawQuery(query, null)
+        if (cursor.count > 0) {
+            existe = true
+        }
+        cursor.close()
+        db.close()
+        return existe
     }
 
     fun pesquisarItensPorDescricao(id: String?, descricao: String):Boolean {

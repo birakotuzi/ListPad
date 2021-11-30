@@ -7,6 +7,7 @@ import android.view.MenuItem
 import android.widget.EditText
 import android.widget.Toast
 import br.edu.ifsp.scl.sdm.listpad.Data.DatabaseHelper
+import br.edu.ifsp.scl.sdm.listpad.Model.Categoria
 import br.edu.ifsp.scl.sdm.listpad.Model.Item
 import br.edu.ifsp.scl.sdm.listpad.Model.Lista
 import br.edu.ifsp.scl.sdm.listpad.R
@@ -20,8 +21,8 @@ class CadastroItemActivity : AppCompatActivity() {
         setContentView(R.layout.activity_cadastro_item)
 
         lista = this.intent.getSerializableExtra("lista") as Lista
-        val listaId = findViewById<EditText>(R.id.eTItemLista)
-        val listaNome = findViewById<EditText>(R.id.eTItemListaNome)
+        val listaId = findViewById<EditText>(R.id.etItemLista)
+        val listaNome = findViewById<EditText>(R.id.etItemListaNome)
 
 
         listaId.setText(lista.id_lista.toString())
@@ -36,9 +37,9 @@ class CadastroItemActivity : AppCompatActivity() {
     override fun onOptionsItemSelected(menuItem: MenuItem): Boolean {
         var db = DatabaseHelper(this)
         if(menuItem.itemId==R.id.action_salvarItem) {
-            val descricao = findViewById<EditText>(R.id.eTItemDescricao).text.toString()
-            val flag = findViewById<EditText>(R.id.eTItemFlag).text.toString()
-            val lista = findViewById<EditText>(R.id.eTItemLista).text.toString()
+            val descricao = findViewById<EditText>(R.id.etItemDescricao).text.toString()
+            val flag = findViewById<EditText>(R.id.etItemFlag).text.toString()
+            val lista = findViewById<EditText>(R.id.etItemLista).text.toString()
 
             val existe = db.pesquisarItensPorDescricao(null, descricao)
             if (existe) {

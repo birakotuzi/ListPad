@@ -10,10 +10,10 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.ListPad">
         <activity
-            android:name=".Actvity.CadastroItemActivity"
+            android:name=".Actvity.DetalheItemActivity"
             android:exported="true" />
         <activity
-            android:name=".Actvity.DetalheItemActivity"
+            android:name=".Actvity.CadastroItemActivity"
             android:exported="true" />
         <activity
             android:name=".Actvity.ListaItemActivity"

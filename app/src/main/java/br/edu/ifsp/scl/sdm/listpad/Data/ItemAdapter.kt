@@ -1,5 +1,7 @@
 package br.edu.ifsp.scl.sdm.listpad.Data
 
+import android.os.Parcel
+import android.os.Parcelable
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -8,7 +10,7 @@ import androidx.recyclerview.widget.RecyclerView
 import br.edu.ifsp.scl.sdm.listpad.Model.Item
 import br.edu.ifsp.scl.sdm.listpad.R
 
-class ItemAdapter (val itensLista:ArrayList<Item>): RecyclerView.Adapter<ItemAdapter.ItemViewHolder>() {
+class ItemAdapter (var itemsLista:ArrayList<Item>): RecyclerView.Adapter<ItemAdapter.ItemViewHolder>() {
 
     var listener:ItemListener?=null
 
@@ -25,15 +27,15 @@ class ItemAdapter (val itensLista:ArrayList<Item>): RecyclerView.Adapter<ItemAda
     }
 
     override fun onBindViewHolder(holder: ItemAdapter.ItemViewHolder, position: Int) {
-        holder.descricaoVH.text = itensLista[position].descricao
+        holder.descricaoItemVH.text = itemsLista[position].descricao
     }
 
     override fun getItemCount(): Int {
-        return itensLista.size
+        return itemsLista.size
     }
 
     inner class ItemViewHolder(view: View): RecyclerView.ViewHolder(view) {
-        val descricaoVH = view.findViewById<TextView>(R.id.tVItemDescricao)
+        val descricaoItemVH = view.findViewById<TextView>(R.id.tvItemDescricao)
 
         init {
             view.setOnClickListener {
@@ -45,4 +47,5 @@ class ItemAdapter (val itensLista:ArrayList<Item>): RecyclerView.Adapter<ItemAda
     interface ItemListener {
         fun onItemClick(pos: Int)
     }
+
 }

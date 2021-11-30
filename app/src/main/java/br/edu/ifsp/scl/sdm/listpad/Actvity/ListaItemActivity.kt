@@ -15,7 +15,7 @@ import com.google.android.material.floatingactionbutton.FloatingActionButton
 class ListaItemActivity : AppCompatActivity() {
 
     val db = DatabaseHelper(this)
-    var itensLista = ArrayList<Item>()
+    var itemsLista = ArrayList<Item>()
     lateinit var itemAdapter: ItemAdapter
     private var lista = Lista()
 
@@ -25,9 +25,8 @@ class ListaItemActivity : AppCompatActivity() {
 
         lista = this.intent.getSerializableExtra("lista") as Lista
 
-        val fab = findViewById<FloatingActionButton>(R.id.fab)
+        val fab = findViewById<FloatingActionButton>(R.id.fabItem)
         fab.setOnClickListener {
-            startActivity(intent)
             val intent = Intent(applicationContext,CadastroItemActivity::class.java)
             intent.putExtra("lista", lista)
             startActivity(intent)
@@ -37,18 +36,17 @@ class ListaItemActivity : AppCompatActivity() {
     }
 
     fun updateUI() {
-        //itensLista = db.listarItensPorIdLista(lista.id_lista.toString())
-        itensLista = db.listarItens()
-        itemAdapter = ItemAdapter(itensLista)
+        itemsLista = db.listarItensPorIdLista(lista.id_lista.toString())
+        itemAdapter = ItemAdapter(itemsLista)
 
-        val recyclerview = findViewById<RecyclerView>(R.id.rVItem)
+        val recyclerview = findViewById<RecyclerView>(R.id.rvItem)
         recyclerview.layoutManager = LinearLayoutManager(this)
         recyclerview.adapter = itemAdapter
 
-        var listener = object :ItemAdapter.ItemListener{
+        var listener = object : ItemAdapter.ItemListener{
             override fun onItemClick(pos: Int) {
                 val intent = Intent(applicationContext, DetalheItemActivity::class.java)
-                val i = itemAdapter.itensLista[pos]
+                val i = itemAdapter.itemsLista[pos]
                 intent.putExtra("item", i)
                 startActivity(intent)
             }
