@@ -7,13 +7,24 @@
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:text="Categoria"
+        android:textSize="30sp"/>
+    <Spinner
+        android:id="@+id/sPLisCategoria"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textSize="30sp"
+        />
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
         android:text="Nome"
         android:textSize="30sp"/>
     <EditText
         android:id="@+id/eTLisNome"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:textSize="30sp"/>
+        android:textSize="20sp"/>
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -23,31 +34,23 @@
         android:id="@+id/eTLisDescricao"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:textSize="30sp"/>
+        android:textSize="20sp"/>
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Urgente"
         android:textSize="30sp"/>
+    <Spinner
+        android:id="@+id/sPLisUrgente"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textSize="30sp"
+        />
     <EditText
         android:id="@+id/eTLisUrgente"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:textSize="30sp"/>
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Categoria"
-        android:textSize="30sp"/>
-    <Spinner
-        android:id="@+id/sPLisCategoria"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        />
-    <EditText
-        android:id="@+id/eTLisCategoria"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:textSize="30sp"/>
+        android:textSize="20sp"/>
+
 
 </LinearLayout>

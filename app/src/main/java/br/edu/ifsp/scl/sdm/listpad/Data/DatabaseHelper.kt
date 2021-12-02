@@ -168,7 +168,7 @@ class DatabaseHelper(context: Context): SQLiteOpenHelper(context, DATABASE_NAME,
 
     fun listarCategorias():ArrayList<Categoria> {
         val listaCategorias = ArrayList<Categoria>()
-        val query = "SELECT * FROM $CAT_TABLE_NAME ORDER BY $CAT_DESCRICAO"
+        val query = "SELECT * FROM $CAT_TABLE_NAME ORDER BY $ID_CATEGORIA"
         val db = this.readableDatabase
         val cursor = db.rawQuery(query, null)
         while (cursor.moveToNext()) {
