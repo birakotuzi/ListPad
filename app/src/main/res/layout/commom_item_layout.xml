@@ -13,12 +13,14 @@
         android:id="@+id/etItemListaNome"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:textSize="30sp"/>
+        android:textSize="20sp"
+        android:enabled="false"/>
     <EditText
         android:id="@+id/etItemLista"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:textSize="30sp"/>
+        android:textSize="20sp"
+        android:visibility="gone"/>
 
     <TextView
         android:layout_width="wrap_content"
@@ -29,16 +31,17 @@
         android:id="@+id/etItemDescricao"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:textSize="30sp"/>
+        android:textSize="20sp"/>
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Flag"
+        android:text="Cumprido"
         android:textSize="30sp"/>
-    <EditText
-        android:id="@+id/etItemFlag"
+    <Spinner
+        android:id="@+id/sPItemFlag"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:textSize="30sp"/>
+        android:textSize="30sp"
+        />
 
 </LinearLayout>

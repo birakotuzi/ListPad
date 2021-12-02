@@ -238,6 +238,24 @@ class DatabaseHelper(context: Context): SQLiteOpenHelper(context, DATABASE_NAME,
         return listaItens
     }
 
+    fun buscarListaPorId(id: String):Lista {
+        var lista= Lista()
+        var query = "SELECT * FROM $LIS_TABLE_NAME WHERE $ID_LISTA = '$id'"
+        val db = this.readableDatabase
+        val cursor = db.rawQuery(query, null)
+        while (cursor.moveToNext()) {
+            lista = Lista (cursor.getInt(0),
+                cursor.getString(1),
+                cursor.getString(2),
+                cursor.getInt(3),
+                cursor.getInt(4)
+            )
+        }
+        cursor.close()
+        db.close()
+        return lista
+    }
+
 
     fun pesquisarListasPorNome(id: String?, nome: String):Boolean {
         var existe = false
