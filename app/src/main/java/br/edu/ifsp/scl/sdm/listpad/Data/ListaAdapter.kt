@@ -34,6 +34,7 @@ class ListaAdapter (val listasLista:ArrayList<Lista>): RecyclerView.Adapter<List
             holder.urgenteVH.setImageResource(R.drawable.ic_baseline_error_outline_24)
         }
         holder.editarVH.setImageResource(R.drawable.ic_baseline_edit_24)
+        holder.deletarVH.setImageResource(R.drawable.ic_baseline_delete_forever_24)
     }
 
     override fun getItemCount(): Int {
@@ -44,6 +45,7 @@ class ListaAdapter (val listasLista:ArrayList<Lista>): RecyclerView.Adapter<List
         val nomeVH = view.findViewById<TextView>(R.id.tVLisnome)
         val urgenteVH = view.findViewById<ImageView>(R.id.iVUrgente)
         val editarVH = view.findViewById<ImageView>(R.id.iVEditar)
+        val deletarVH = view.findViewById<ImageView>(R.id.iVDeletar)
 
         init {
             view.setOnClickListener {
@@ -55,6 +57,9 @@ class ListaAdapter (val listasLista:ArrayList<Lista>): RecyclerView.Adapter<List
             view.findViewById<ImageView>(R.id.iVEditar).setOnClickListener {
                 listener?.onImageEditClick(adapterPosition)
             }
+            view.findViewById<ImageView>(R.id.iVDeletar).setOnClickListener {
+                listener?.onImageDeleteClick(adapterPosition)
+            }
         }
     }
 
@@ -62,6 +67,7 @@ class ListaAdapter (val listasLista:ArrayList<Lista>): RecyclerView.Adapter<List
         fun onItemClick(pos: Int)
         fun onImageClick(pos: Int)
         fun onImageEditClick(pos: Int)
+        fun onImageDeleteClick(pos: Int)
     }
 
 }

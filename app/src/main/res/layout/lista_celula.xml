@@ -27,6 +27,13 @@
             </LinearLayout>
 
             <ImageView
+                android:id="@+id/iVDeletar"
+                android:layout_width="50dp"
+                android:layout_height="50dp"
+                android:layout_alignParentEnd="true"
+                android:layout_marginRight="120dp"/>
+
+            <ImageView
                 android:id="@+id/iVEditar"
                 android:layout_width="50dp"
                 android:layout_height="50dp"

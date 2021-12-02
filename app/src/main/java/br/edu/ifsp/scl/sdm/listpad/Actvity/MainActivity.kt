@@ -26,8 +26,6 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
-        //this.setTitle("tdassa")
-
         val fab = findViewById<FloatingActionButton>(R.id.fab)
         fab.setOnClickListener {
             val intent = Intent(applicationContext,CadastroListaActivity::class.java)
@@ -78,6 +76,13 @@ class MainActivity : AppCompatActivity() {
                 val l = listaAdapter.listasLista[pos]
                 intent.putExtra("lista", l)
                 startActivity(intent)
+            }
+
+            override fun onImageDeleteClick(pos: Int) {
+                val l = listaAdapter.listasLista[pos]
+                if(db.apagarLista(l)>0) {
+                    updateUI()
+                }
             }
         }
         listaAdapter.setClickListener(listener)
