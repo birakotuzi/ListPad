@@ -21,6 +21,7 @@ class DetalheItemActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_detalhe_item)
+        this.setTitle("Editar item")
 
         item = this.intent.getSerializableExtra("item") as Item
         val db = DatabaseHelper(this)

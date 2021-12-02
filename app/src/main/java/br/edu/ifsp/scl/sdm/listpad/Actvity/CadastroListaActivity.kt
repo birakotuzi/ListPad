@@ -20,6 +20,7 @@ class CadastroListaActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_cadastro_lista)
+        this.setTitle("Cadastrar lista")
 
         val db = DatabaseHelper(this)
         categoriasLista = db.listarCategorias()

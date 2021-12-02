@@ -21,6 +21,7 @@ class ListaCategoriaActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_lista_categoria)
 
+        this.setTitle("Categorias")
         val fab = findViewById<FloatingActionButton>(R.id.fab)
         fab.setOnClickListener {
             val intent = Intent(applicationContext,CadastroCategoriaActivity::class.java)

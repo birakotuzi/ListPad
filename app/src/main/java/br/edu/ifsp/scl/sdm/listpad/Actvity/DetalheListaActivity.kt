@@ -21,6 +21,7 @@ class DetalheListaActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_detalhe_lista)
+        this.setTitle("Editar lista")
 
         lista = this.intent.getSerializableExtra("lista") as Lista
         val nome = findViewById<EditText>(R.id.eTLisNome)

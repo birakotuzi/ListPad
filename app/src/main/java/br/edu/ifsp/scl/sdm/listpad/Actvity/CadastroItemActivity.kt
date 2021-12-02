@@ -21,6 +21,7 @@ class CadastroItemActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_cadastro_item)
+        this.setTitle("Cadastrar item")
 
         lista = this.intent.getSerializableExtra("lista") as Lista
         val listaId = findViewById<EditText>(R.id.etItemLista)

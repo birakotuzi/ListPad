@@ -14,6 +14,8 @@ class CadastroCategoriaActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_cadastro_categoria)
+
+        this.setTitle("Cadastrar categoria")
     }
 
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {

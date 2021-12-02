@@ -18,6 +18,7 @@ class DetalheCategoriaActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_detalhe_categoria)
+        this.setTitle("Editar categoria")
 
         categoria = this.intent.getSerializableExtra("categoria") as Categoria
         val descricao = findViewById<EditText>(R.id.editTextDescricao)
