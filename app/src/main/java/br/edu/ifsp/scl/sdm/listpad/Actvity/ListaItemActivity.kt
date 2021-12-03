@@ -26,9 +26,11 @@ class ListaItemActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_lista_item)
-        this.setTitle("Itens")
+
 
         lista = this.intent.getSerializableExtra("lista") as Lista
+
+        this.setTitle("Itens - " + lista.nome)
 
         val fab = findViewById<FloatingActionButton>(R.id.fabItem)
         fab.setOnClickListener {
