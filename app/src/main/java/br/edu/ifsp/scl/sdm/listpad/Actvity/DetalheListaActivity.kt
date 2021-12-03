@@ -1,5 +1,6 @@
 package br.edu.ifsp.scl.sdm.listpad.Actvity
 
+import android.app.AlertDialog
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
@@ -27,7 +28,6 @@ class DetalheListaActivity : AppCompatActivity() {
         lista = this.intent.getSerializableExtra("lista") as Lista
         val nome = findViewById<EditText>(R.id.eTLisNome)
         val descricao = findViewById<EditText>(R.id.eTLisDescricao)
-        val urgente = findViewById<EditText>(R.id.eTLisUrgente)
 
         val db = DatabaseHelper(this)
         categoriasLista = db.listarCategorias()
@@ -118,17 +118,33 @@ class DetalheListaActivity : AppCompatActivity() {
         }
 
         if(item.itemId==R.id.action_excluirLista){
-            if (db.apagarItemPorIdLista(lista) > 0) {
-                if(db.apagarLista(lista)>0) {
-                    Toast.makeText(this, "Lista excluída", Toast.LENGTH_LONG).show()
-                }
-            }
-            finish()
+            confirmaExclusao(lista)
+
         }
         if(item.itemId==R.id.action_listarLista){
             val intent = Intent(applicationContext,MainActivity::class.java)
             startActivity(intent)
         }
         return super.onOptionsItemSelected(item)
+    }
+
+    private fun confirmaExclusao(l: Lista) {
+        val db = DatabaseHelper(this)
+        var alertDialog = AlertDialog.Builder(this)
+        alertDialog.setTitle("Alerta") // O Titulo da notificação
+        alertDialog.setMessage("Confirma a exclusão?") // a mensagem ou alerta
+
+        alertDialog.setPositiveButton("Sim", { _, _ ->
+            if (db.apagarItemPorIdLista(l) >= 0) {
+                if(db.apagarLista(l)>0) {
+                    Toast.makeText(this, "Lista excluída", Toast.LENGTH_LONG).show()
+                }
+            }
+            finish()
+        })
+        alertDialog.setNegativeButton("Não", { dialog, _ ->
+            dialog.dismiss()
+        })
+        alertDialog.show()
     }
 }

@@ -81,31 +81,28 @@ class MainActivity : AppCompatActivity() {
 
             override fun onImageDeleteClick(pos: Int) {
                 val l = listaAdapter.listasLista[pos]
-                if (db.apagarItemPorIdLista(l) > 0) {
-                    if (db.apagarLista(l) > 0) {
-                        updateUI()
-                    }
-                }
+                confirmaExclusao(l)
             }
         }
         listaAdapter.setClickListener(listener)
     }
 
-    fun chamarAlert():Boolean {
-        var retorno = false
+    private fun confirmaExclusao(l: Lista) {
         var alertDialog = AlertDialog.Builder(this)
         alertDialog.setTitle("Alerta") // O Titulo da notificação
         alertDialog.setMessage("Confirma a exclusão?") // a mensagem ou alerta
 
-        alertDialog.setPositiveButton("Sim", { _, _ ->
-            retorno = true
-            //Toast.makeText(this, "Sim", Toast.LENGTH_LONG).show()
+        alertDialog.setPositiveButton("Sim", { dialog, _ ->
+            if (db.apagarItemPorIdLista(l) >= 0) {
+                if (db.apagarLista(l) > 0) {
+                    updateUI()
+                }
+            }
         })
-        alertDialog.setNegativeButton("Não", { _, _ ->
-            //Toast.makeText(this, "Não excluído", Toast.LENGTH_LONG).show()
+        alertDialog.setNegativeButton("Não", { dialog, _ ->
+            dialog.dismiss()
         })
         alertDialog.show()
-        return  retorno
     }
 
     override fun onResume() {

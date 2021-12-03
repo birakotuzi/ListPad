@@ -1,5 +1,6 @@
 package br.edu.ifsp.scl.sdm.listpad.Actvity
 
+import android.app.AlertDialog
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
@@ -98,10 +99,8 @@ class DetalheItemActivity : AppCompatActivity() {
         }
 
         if(menuItem.itemId==R.id.action_excluirItem){
-            if(db.apagarItem(item)>0) {
-                Toast.makeText(this, "Item excluído", Toast.LENGTH_LONG).show()
-            }
-            finish()
+            confirmaExclusao(item)
+
         }
         if(menuItem.itemId==R.id.action_listarItem){
             val intent = Intent(applicationContext,ListaItemActivity::class.java)
@@ -109,5 +108,23 @@ class DetalheItemActivity : AppCompatActivity() {
             startActivity(intent)
         }
         return super.onOptionsItemSelected(menuItem)
+    }
+
+    private fun confirmaExclusao(i: Item) {
+        val db = DatabaseHelper(this)
+        var alertDialog = AlertDialog.Builder(this)
+        alertDialog.setTitle("Alerta") // O Titulo da notificação
+        alertDialog.setMessage("Confirma a exclusão?") // a mensagem ou alerta
+
+        alertDialog.setPositiveButton("Sim", { _, _ ->
+            if(db.apagarItem(i)>0) {
+                Toast.makeText(this, "Item excluído", Toast.LENGTH_LONG).show()
+            }
+            finish()
+        })
+        alertDialog.setNegativeButton("Não", { dialog, _ ->
+            dialog.dismiss()
+        })
+        alertDialog.show()
     }
 }

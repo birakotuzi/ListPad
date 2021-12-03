@@ -1,5 +1,6 @@
 package br.edu.ifsp.scl.sdm.listpad.Actvity
 
+import android.app.AlertDialog
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
@@ -76,12 +77,26 @@ class ListaItemActivity : AppCompatActivity() {
 
             override fun onImageDeleteClick(pos: Int) {
                 val i = itemAdapter.itemsLista[pos]
-                if(db.apagarItem(i)>0) {
-                    updateUI()
-                }
+                confirmaExclusao(i)
             }
         }
         itemAdapter.setClickListener(listener)
+    }
+
+    private fun confirmaExclusao(i: Item) {
+        var alertDialog = AlertDialog.Builder(this)
+        alertDialog.setTitle("Alerta") // O Titulo da notificação
+        alertDialog.setMessage("Confirma a exclusão?") // a mensagem ou alerta
+
+        alertDialog.setPositiveButton("Sim", { _, _ ->
+            if(db.apagarItem(i)>0) {
+                updateUI()
+            }
+        })
+        alertDialog.setNegativeButton("Não", { dialog, _ ->
+            dialog.dismiss()
+        })
+        alertDialog.show()
     }
 
     override fun onResume() {

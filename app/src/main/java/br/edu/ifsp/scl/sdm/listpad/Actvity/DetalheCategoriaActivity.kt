@@ -1,5 +1,6 @@
 package br.edu.ifsp.scl.sdm.listpad.Actvity
 
+import android.app.AlertDialog
 import android.content.Intent
 import android.database.DatabaseErrorHandler
 import androidx.appcompat.app.AppCompatActivity
@@ -52,10 +53,27 @@ class DetalheCategoriaActivity : AppCompatActivity() {
         }
 
         if(item.itemId==R.id.action_excluirCategoria){
+            confirmaExclusao(categoria)
+        }
+        if(item.itemId==R.id.action_listaCategoria) {
+            val intent = Intent(applicationContext,ListaCategoriaActivity::class.java)
+            startActivity(intent)
+        }
+
+        return super.onOptionsItemSelected(item)
+    }
+
+    private fun confirmaExclusao(c: Categoria) {
+        val db = DatabaseHelper(this)
+        var alertDialog = AlertDialog.Builder(this)
+        alertDialog.setTitle("Alerta") // O Titulo da notificação
+        alertDialog.setMessage("Confirma a exclusão?") // a mensagem ou alerta
+
+        alertDialog.setPositiveButton("Sim", { _, _ ->
             var exclusao_ref = true
-            var listasLista = db.listarListasPorCategoria(categoria)
+            var listasLista = db.listarListasPorCategoria(c)
             listasLista.forEach {
-                if (db.apagarItemPorIdLista(it) > 0) {
+                if (db.apagarItemPorIdLista(it) >= 0) {
                     if (db.apagarLista(it) > 0) {
                         exclusao_ref = true
                     }
@@ -67,21 +85,18 @@ class DetalheCategoriaActivity : AppCompatActivity() {
                     exclusao_ref = false
                 }
             }
-
             if (exclusao_ref == true)
-                if(db.apagarCategoria(categoria)>0) {
+                if(db.apagarCategoria(c)>0) {
                     Toast.makeText(this, "Categoria excluída", Toast.LENGTH_LONG).show()
                 }
-            else {
+                else {
                     Toast.makeText(this, "Erro ao excluir categoria", Toast.LENGTH_LONG).show()
-            }
+                }
             finish()
-        }
-        if(item.itemId==R.id.action_listaCategoria) {
-            val intent = Intent(applicationContext,ListaCategoriaActivity::class.java)
-            startActivity(intent)
-        }
-
-        return super.onOptionsItemSelected(item)
+        })
+        alertDialog.setNegativeButton("Não", { dialog, _ ->
+            dialog.dismiss()
+        })
+        alertDialog.show()
     }
 }
