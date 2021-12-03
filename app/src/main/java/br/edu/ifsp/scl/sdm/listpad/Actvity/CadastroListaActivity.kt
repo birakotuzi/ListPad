@@ -1,5 +1,6 @@
 package br.edu.ifsp.scl.sdm.listpad.Actvity
 
+import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.Menu
@@ -50,28 +51,35 @@ class CadastroListaActivity : AppCompatActivity() {
         var db = DatabaseHelper(this)
         if(item.itemId==R.id.action_salvarLista) {
             val nome = findViewById<EditText>(R.id.eTLisNome).text.toString()
-            val descricao = findViewById<EditText>(R.id.eTLisDescricao).text.toString()
-            //val urgente = findViewById<EditText>(R.id.eTLisUrgente).text.toString()
-            //val categoria = findViewById<EditText>(R.id.eTLisCategoria).text.toString()
-            val spinnerCategoria = findViewById<Spinner>(R.id.sPLisCategoria).selectedItem.toString()
-            val categoria = spinnerCategoria.substringBefore(" - ")
-
-            val spinnerUrgente = findViewById<Spinner>(R.id.sPLisUrgente).selectedItem.toString()
-            var urgente = 0
-            if (spinnerUrgente == "Sim") {
-                urgente = 1
-            }
-
-            val existe = db.pesquisarListasPorNome(null, nome)
-            if (existe) {
-                Toast.makeText(this, "Não é possível inserir. Nome já existe na lista", Toast.LENGTH_LONG).show()
+            if( nome.trim().equals(""))
+            {
+                Toast.makeText(this, "Nome não pode ser vazio", Toast.LENGTH_LONG).show()
             } else {
-                val l = Lista(null, nome, descricao, urgente, categoria.toInt())
-                if (db.inserirLista(l) > 0) {
-                    Toast.makeText(this, "Lista inserida", Toast.LENGTH_LONG).show()
+                val descricao = findViewById<EditText>(R.id.eTLisDescricao).text.toString()
+                val spinnerCategoria = findViewById<Spinner>(R.id.sPLisCategoria).selectedItem.toString()
+                val categoria = spinnerCategoria.substringBefore(" - ")
+
+                val spinnerUrgente = findViewById<Spinner>(R.id.sPLisUrgente).selectedItem.toString()
+                var urgente = 0
+                if (spinnerUrgente == "Sim") {
+                    urgente = 1
                 }
+
+                val existe = db.pesquisarListasPorNome(null, nome)
+                if (existe) {
+                    Toast.makeText(this, "Não é possível inserir. Nome já existe na lista", Toast.LENGTH_LONG).show()
+                } else {
+                    val l = Lista(null, nome, descricao, urgente, categoria.toInt())
+                    if (db.inserirLista(l) > 0) {
+                        Toast.makeText(this, "Lista inserida", Toast.LENGTH_LONG).show()
+                    }
+                }
+                finish()
             }
-            finish()
+        }
+        if(item.itemId==R.id.action_listarLista){
+            val intent = Intent(applicationContext,MainActivity::class.java)
+            startActivity(intent)
         }
         return super.onOptionsItemSelected(item)
     }

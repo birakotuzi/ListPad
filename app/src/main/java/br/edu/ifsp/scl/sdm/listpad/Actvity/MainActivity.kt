@@ -1,5 +1,6 @@
 package br.edu.ifsp.scl.sdm.listpad.Actvity
 
+import android.app.AlertDialog
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
@@ -80,12 +81,31 @@ class MainActivity : AppCompatActivity() {
 
             override fun onImageDeleteClick(pos: Int) {
                 val l = listaAdapter.listasLista[pos]
-                if(db.apagarLista(l)>0) {
-                    updateUI()
+                if (db.apagarItemPorIdLista(l) > 0) {
+                    if (db.apagarLista(l) > 0) {
+                        updateUI()
+                    }
                 }
             }
         }
         listaAdapter.setClickListener(listener)
+    }
+
+    fun chamarAlert():Boolean {
+        var retorno = false
+        var alertDialog = AlertDialog.Builder(this)
+        alertDialog.setTitle("Alerta") // O Titulo da notificação
+        alertDialog.setMessage("Confirma a exclusão?") // a mensagem ou alerta
+
+        alertDialog.setPositiveButton("Sim", { _, _ ->
+            retorno = true
+            //Toast.makeText(this, "Sim", Toast.LENGTH_LONG).show()
+        })
+        alertDialog.setNegativeButton("Não", { _, _ ->
+            //Toast.makeText(this, "Não excluído", Toast.LENGTH_LONG).show()
+        })
+        alertDialog.show()
+        return  retorno
     }
 
     override fun onResume() {
@@ -100,37 +120,11 @@ class MainActivity : AppCompatActivity() {
 
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
-        val db = DatabaseHelper(this)
-
-        if(item.itemId==R.id.action_alterarLista) {
-            val nome = findViewById<EditText>(R.id.eTLisNome).text.toString()
-
-            lista.nome = nome
-
-            if(db.atualizarLista(lista)>0) {
-                Toast.makeText(this, "Informações alteradas", Toast.LENGTH_LONG).show()
-            }
-            finish()
-        }
-
-        if(item.itemId==R.id.action_excluirLista){
-            if(db.apagarLista(lista)>0) {
-                Toast.makeText(this, "Lista excluída", Toast.LENGTH_LONG).show()
-            }
-            finish()
-        }
         // listar Categoria
         if(item.itemId==R.id.action_listarCategoria){
             val intent = Intent(applicationContext,ListaCategoriaActivity::class.java)
             startActivity(intent)
         }
-        /*
-        if(item.itemId==R.id.action_listarItem){
-            val intent = Intent(applicationContext,ListaItemActivity::class.java)
-            startActivity(intent)
-        }
-        */
-
         return super.onOptionsItemSelected(item)
     }
 }

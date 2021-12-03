@@ -27,6 +27,13 @@
             </LinearLayout>
 
             <ImageView
+                android:id="@+id/iVItemDeletar"
+                android:layout_width="50dp"
+                android:layout_height="50dp"
+                android:layout_alignParentEnd="true"
+                android:layout_marginRight="60dp"/>
+
+            <ImageView
                 android:id="@+id/ivItemFlag"
                 android:layout_width="50dp"
                 android:layout_height="50dp"

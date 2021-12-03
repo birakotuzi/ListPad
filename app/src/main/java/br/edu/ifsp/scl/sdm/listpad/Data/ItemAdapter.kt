@@ -34,7 +34,9 @@ class ItemAdapter (var itemsLista:ArrayList<Item>): RecyclerView.Adapter<ItemAda
         } else {
             holder.flagItemVH.setImageResource(R.drawable.ic_baseline_star_outline_24)
         }
+        holder.deletarItemVH.setImageResource(R.drawable.ic_baseline_delete_forever_24)
     }
+
 
     override fun getItemCount(): Int {
         return itemsLista.size
@@ -43,6 +45,7 @@ class ItemAdapter (var itemsLista:ArrayList<Item>): RecyclerView.Adapter<ItemAda
     inner class ItemViewHolder(view: View): RecyclerView.ViewHolder(view) {
         val descricaoItemVH = view.findViewById<TextView>(R.id.tvItemDescricao)
         val flagItemVH = view.findViewById<ImageView>(R.id.ivItemFlag)
+        val deletarItemVH = view.findViewById<ImageView>(R.id.iVItemDeletar)
 
         init {
             view.setOnClickListener {
@@ -51,12 +54,16 @@ class ItemAdapter (var itemsLista:ArrayList<Item>): RecyclerView.Adapter<ItemAda
             view.findViewById<ImageView>(R.id.ivItemFlag).setOnClickListener {
                 listener?.onImageClick(adapterPosition)
             }
+            view.findViewById<ImageView>(R.id.iVItemDeletar).setOnClickListener {
+                listener?.onImageDeleteClick(adapterPosition)
+            }
         }
     }
 
     interface ItemListener {
         fun onItemClick(pos: Int)
         fun onImageClick(pos: Int)
+        fun onImageDeleteClick(pos: Int)
     }
 
 }

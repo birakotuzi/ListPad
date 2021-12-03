@@ -3,6 +3,9 @@ package br.edu.ifsp.scl.sdm.listpad.Actvity
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.view.Menu
+import android.view.MenuItem
+import android.widget.Toast
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import br.edu.ifsp.scl.sdm.listpad.Data.DatabaseHelper
@@ -70,6 +73,13 @@ class ListaItemActivity : AppCompatActivity() {
                     updateUI()
                 }
             }
+
+            override fun onImageDeleteClick(pos: Int) {
+                val i = itemAdapter.itemsLista[pos]
+                if(db.apagarItem(i)>0) {
+                    updateUI()
+                }
+            }
         }
         itemAdapter.setClickListener(listener)
     }
@@ -77,5 +87,20 @@ class ListaItemActivity : AppCompatActivity() {
     override fun onResume() {
         super.onResume()
         updateUI()
+    }
+
+    override fun onCreateOptionsMenu(menu: Menu?): Boolean {
+        menuInflater.inflate(R.menu.menu_lista_categoria, menu)
+        return super.onCreateOptionsMenu(menu)
+    }
+
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        // listar Lista
+        if (item.itemId == R.id.action_listarLista) {
+            val intent = Intent(applicationContext, MainActivity::class.java)
+            startActivity(intent)
+        }
+        return super.onOptionsItemSelected(item)
     }
 }

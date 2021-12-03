@@ -1,5 +1,6 @@
 package br.edu.ifsp.scl.sdm.listpad.Actvity
 
+import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.Menu
@@ -27,7 +28,6 @@ class DetalheListaActivity : AppCompatActivity() {
         val nome = findViewById<EditText>(R.id.eTLisNome)
         val descricao = findViewById<EditText>(R.id.eTLisDescricao)
         val urgente = findViewById<EditText>(R.id.eTLisUrgente)
-        //val categoria = findViewById<EditText>(R.id.eTLisCategoria)
 
         val db = DatabaseHelper(this)
         categoriasLista = db.listarCategorias()
@@ -86,39 +86,48 @@ class DetalheListaActivity : AppCompatActivity() {
 
         if(item.itemId==R.id.action_alterarLista) {
             val nome = findViewById<EditText>(R.id.eTLisNome).text.toString()
-            val descricao = findViewById<EditText>(R.id.eTLisDescricao).text.toString()
-            //val urgente = findViewById<EditText>(R.id.eTLisUrgente).text.toString()
-            //val categoria = findViewById<EditText>(R.id.eTLisCategoria).text.toString()
-            val spinnerCategoria = findViewById<Spinner>(R.id.sPLisCategoria).selectedItem.toString()
-            val categoria = spinnerCategoria.substringBefore(" - ")
-
-            val spinnerUrgente = findViewById<Spinner>(R.id.sPLisUrgente).selectedItem.toString()
-            var urgente = 0
-            if (spinnerUrgente == "Sim") {
-                urgente = 1
-            }
-
-            lista.nome = nome
-            lista.descricao = descricao
-            lista.urgente = urgente
-            lista.categoria = categoria.toInt()
-
-            val existe = db.pesquisarListasPorNome(lista.id_lista.toString(), nome)
-            if (existe) {
-                Toast.makeText(this, "Não é possível atualizar. Já existe outro registro com esse nome na lista", Toast.LENGTH_LONG).show()
+            if( nome.trim().equals(""))
+            {
+                Toast.makeText(this, "Nome não pode ser vazio", Toast.LENGTH_LONG).show()
             } else {
-                if (db.atualizarLista(lista) > 0) {
-                    Toast.makeText(this, "Informações alteradas", Toast.LENGTH_LONG).show()
+                val descricao = findViewById<EditText>(R.id.eTLisDescricao).text.toString()
+                val spinnerCategoria = findViewById<Spinner>(R.id.sPLisCategoria).selectedItem.toString()
+                val categoria = spinnerCategoria.substringBefore(" - ")
+
+                val spinnerUrgente = findViewById<Spinner>(R.id.sPLisUrgente).selectedItem.toString()
+                var urgente = 0
+                if (spinnerUrgente == "Sim") {
+                    urgente = 1
+                }
+
+                lista.nome = nome
+                lista.descricao = descricao
+                lista.urgente = urgente
+                lista.categoria = categoria.toInt()
+
+                val existe = db.pesquisarListasPorNome(lista.id_lista.toString(), nome)
+                if (existe) {
+                    Toast.makeText(this, "Não é possível atualizar. Já existe outro registro com esse nome na lista", Toast.LENGTH_LONG).show()
+                } else {
+                    if (db.atualizarLista(lista) > 0) {
+                        Toast.makeText(this, "Informações alteradas", Toast.LENGTH_LONG).show()
+                    }
+                }
+                finish()
+            }
+        }
+
+        if(item.itemId==R.id.action_excluirLista){
+            if (db.apagarItemPorIdLista(lista) > 0) {
+                if(db.apagarLista(lista)>0) {
+                    Toast.makeText(this, "Lista excluída", Toast.LENGTH_LONG).show()
                 }
             }
             finish()
         }
-
-        if(item.itemId==R.id.action_excluirLista){
-            if(db.apagarLista(lista)>0) {
-                Toast.makeText(this, "Lista excluída", Toast.LENGTH_LONG).show()
-            }
-            finish()
+        if(item.itemId==R.id.action_listarLista){
+            val intent = Intent(applicationContext,MainActivity::class.java)
+            startActivity(intent)
         }
         return super.onOptionsItemSelected(item)
     }

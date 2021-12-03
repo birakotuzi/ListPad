@@ -1,5 +1,6 @@
 package br.edu.ifsp.scl.sdm.listpad.Actvity
 
+import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.Menu
@@ -27,12 +28,20 @@ class CadastroCategoriaActivity : AppCompatActivity() {
         var db = DatabaseHelper(this)
         if(item.itemId==R.id.action_salvarCategoria) {
             val descricao = findViewById<EditText>(R.id.editTextDescricao).text.toString()
-
-            val c = Categoria(null, descricao)
-            if(db.inserirCategoria(c)>0) {
-                Toast.makeText(this, "Categoria inserida", Toast.LENGTH_LONG)
+            if( descricao.trim().equals(""))
+            {
+                Toast.makeText(this, "Descrição não pode ser vazia", Toast.LENGTH_LONG).show()
+            } else {
+                val c = Categoria(null, descricao)
+                if (db.inserirCategoria(c) > 0) {
+                    Toast.makeText(this, "Categoria inserida", Toast.LENGTH_LONG)
+                }
+                finish()
             }
-            finish()
+        }
+        if(item.itemId==R.id.action_listaCategoria) {
+            val intent = Intent(applicationContext,ListaCategoriaActivity::class.java)
+            startActivity(intent)
         }
         return super.onOptionsItemSelected(item)
     }

@@ -1,5 +1,6 @@
 package br.edu.ifsp.scl.sdm.listpad.Actvity
 
+import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.Menu
@@ -69,27 +70,31 @@ class DetalheItemActivity : AppCompatActivity() {
 
         if(menuItem.itemId==R.id.action_salvarItem) {
             val descricao = findViewById<EditText>(R.id.etItemDescricao).text.toString()
-            val lista = findViewById<EditText>(R.id.etItemLista).text.toString()
-
-            val spinnerCumprido = findViewById<Spinner>(R.id.sPItemFlag).selectedItem.toString()
-            var flag = 0
-            if (spinnerCumprido == "Sim") {
-                flag = 1
-            }
-
-            item.descricao = descricao
-            item.flag = flag
-            item.lista = lista.toInt()
-
-            val existe = db.pesquisarItensPorDescricao(item.id_item.toString(), descricao)
-            if (existe) {
-                Toast.makeText(this, "Não é possível atualizar. Já existe outro registro com essa descrição", Toast.LENGTH_LONG).show()
+            if(descricao.trim().equals(""))
+            {
+                Toast.makeText(this, "Descrição não pode ser vazia", Toast.LENGTH_LONG).show()
             } else {
-                if (db.atualizarItem(item) > 0) {
-                    Toast.makeText(this, "Informações alteradas", Toast.LENGTH_LONG).show()
+                val lista = findViewById<EditText>(R.id.etItemLista).text.toString()
+                val spinnerCumprido = findViewById<Spinner>(R.id.sPItemFlag).selectedItem.toString()
+                var flag = 0
+                if (spinnerCumprido == "Sim") {
+                    flag = 1
                 }
+
+                item.descricao = descricao
+                item.flag = flag
+                item.lista = lista.toInt()
+
+                val existe = db.pesquisarItensPorDescricao(item.id_item.toString(), descricao)
+                if (existe) {
+                    Toast.makeText(this, "Não é possível atualizar. Já existe outro registro com essa descrição", Toast.LENGTH_LONG).show()
+                } else {
+                    if (db.atualizarItem(item) > 0) {
+                        Toast.makeText(this, "Informações alteradas", Toast.LENGTH_LONG).show()
+                    }
+                }
+                finish()
             }
-            finish()
         }
 
         if(menuItem.itemId==R.id.action_excluirItem){
@@ -97,6 +102,11 @@ class DetalheItemActivity : AppCompatActivity() {
                 Toast.makeText(this, "Item excluído", Toast.LENGTH_LONG).show()
             }
             finish()
+        }
+        if(menuItem.itemId==R.id.action_listarItem){
+            val intent = Intent(applicationContext,ListaItemActivity::class.java)
+            intent.putExtra("lista", lista)
+            startActivity(intent)
         }
         return super.onOptionsItemSelected(menuItem)
     }

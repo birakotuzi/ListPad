@@ -1,5 +1,6 @@
 package br.edu.ifsp.scl.sdm.listpad.Actvity
 
+import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.Menu
@@ -47,24 +48,34 @@ class CadastroItemActivity : AppCompatActivity() {
         var db = DatabaseHelper(this)
         if(menuItem.itemId==R.id.action_salvarItem) {
             val descricao = findViewById<EditText>(R.id.etItemDescricao).text.toString()
-            val lista = findViewById<EditText>(R.id.etItemLista).text.toString()
-
-            val spinnerCumprido = findViewById<Spinner>(R.id.sPItemFlag).selectedItem.toString()
-            var flag = 0
-            if (spinnerCumprido == "Sim") {
-                flag = 1
-            }
-
-            val existe = db.pesquisarItensPorDescricao(null, descricao)
-            if (existe) {
-                Toast.makeText(this, "Não é possível inserir. Descrição já existe", Toast.LENGTH_LONG).show()
+            if(descricao.trim().equals(""))
+            {
+                Toast.makeText(this, "Descrição não pode ser vazia", Toast.LENGTH_LONG).show()
             } else {
-                val l = Item(null, descricao, flag.toInt(), lista.toInt())
-                if (db.inserirItem(l) > 0) {
-                    Toast.makeText(this, "Item inserido", Toast.LENGTH_LONG).show()
+                val lista = findViewById<EditText>(R.id.etItemLista).text.toString()
+
+                val spinnerCumprido = findViewById<Spinner>(R.id.sPItemFlag).selectedItem.toString()
+                var flag = 0
+                if (spinnerCumprido == "Sim") {
+                    flag = 1
                 }
+
+                val existe = db.pesquisarItensPorDescricao(null, descricao)
+                if (existe) {
+                    Toast.makeText(this, "Não é possível inserir. Descrição já existe", Toast.LENGTH_LONG).show()
+                } else {
+                    val l = Item(null, descricao, flag.toInt(), lista.toInt())
+                    if (db.inserirItem(l) > 0) {
+                        Toast.makeText(this, "Item inserido", Toast.LENGTH_LONG).show()
+                    }
+                }
+                finish()
             }
-            finish()
+        }
+        if(menuItem.itemId==R.id.action_listarItem){
+            val intent = Intent(applicationContext,ListaItemActivity::class.java)
+            intent.putExtra("lista", lista)
+            startActivity(intent)
         }
         return super.onOptionsItemSelected(menuItem)
     }

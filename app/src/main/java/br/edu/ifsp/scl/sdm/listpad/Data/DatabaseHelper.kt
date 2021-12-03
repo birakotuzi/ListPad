@@ -159,6 +159,13 @@ class DatabaseHelper(context: Context): SQLiteOpenHelper(context, DATABASE_NAME,
         return result
     }
 
+    fun apagarItemPorIdLista(lista: Lista): Int {
+        val db = this.writableDatabase
+        val result = db.delete(ITEM_TABLE_NAME,"$ITEM_LISTA=?", arrayOf(lista.id_lista.toString()))
+        db.close()
+        return result
+    }
+
     fun apagarItem(item: Item): Int {
         val db = this.writableDatabase
         val result = db.delete(ITEM_TABLE_NAME,"$ID_ITEM=?", arrayOf(item.id_item.toString()))
@@ -201,6 +208,25 @@ class DatabaseHelper(context: Context): SQLiteOpenHelper(context, DATABASE_NAME,
         return listaListas
     }
 
+    fun listarListasPorCategoria(categoria: Categoria):ArrayList<Lista> {
+        var id_categoria = categoria.id_categoria.toString()
+        val listaListas = ArrayList<Lista>()
+        val query = "SELECT * FROM $LIS_TABLE_NAME WHERE $LIS_CATEGORIA = $id_categoria"
+        val db = this.readableDatabase
+        val cursor = db.rawQuery(query, null)
+        while (cursor.moveToNext()) {
+            var c = Lista (cursor.getInt(0),
+                cursor.getString(1),
+                cursor.getString(2),
+                cursor.getInt(3),
+                cursor.getInt(4)
+            )
+            listaListas.add(c)
+        }
+        cursor.close()
+        db.close()
+        return listaListas
+    }
 
     fun listarItensPorIdLista(id_lista: String):ArrayList<Item> {
         val listaItens = ArrayList<Item>()
